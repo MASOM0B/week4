@@ -2,20 +2,20 @@
 
 Creation of git files, git repo and pushing the how I generally pushed the files
 
-mkdir week_4
-cd week_4
-git init
-touch ORFs_F_only.py README.md
-nano ORFs_F_only.py
-git add ORFs_F_only.py README.md
-git commit -m "ORFs_F_only.py"
-Username and Password (Instead of Password, had to create a token following by going into my profile, settings, Developer Settings, Personal Access Tokens, Fine-grained tokens, create token after adding a description)
+### mkdir week_4
+### cd week_4
+### git init
+### touch ORFs_F_only.py README.md
+### nano ORFs_F_only.py
+### git add ORFs_F_only.py README.md
+### git commit -m "ORFs_F_only.py"
+### Username and Password (Instead of Password, had to create a token following by going into my profile, settings, Developer Settings, Personal Access Tokens, Fine-grained tokens, create token after adding a description)
 
 ## 1. ORFs Forward only
 
 Command: python3 ORFs_F_only.py /home/masom0b/ncbi_dataset/week_4/ncbi_dataset/data/GCF_000006745.1/GCF_000006745.1_ASM674v1_genomic.fna > ORFs_F_only_output.txt 
 
-Code: 
+Python Code: 
 
 ```
 import argparse #ChatGPT3.5 was used to ask which module is used in Bio-Python to search for a fasta file type as an input to be read by the code itself
@@ -54,6 +54,11 @@ if __name__ == "__main__":
 
 ```
 
+Commit = git add 
+git commit -m
+git push 
+ 
+
 Output = ORFs_F_only_output.txt
 
 This output was pushed along with 2 other outputs as the 8th commit
@@ -62,7 +67,7 @@ This output was pushed along with 2 other outputs as the 8th commit
 
 Command: python3 ORFs_FR.py /home/masom0b/ncbi_dataset/week_4/ncbi_dataset/data/GCF_000006745.1/GCF_000006745.1_ASM674v1_genomic.fna > ORFs_FR_output.txt
 
-Code:
+Python Code:
 
 ```
 import argparse
@@ -112,12 +117,11 @@ Output= ORF_FR_output.txt
 
 ## 3. Rosalind Problem 72
 
-Commands: 
-
+Commands:  
 nano Rosalind72.txt
-python3 translated_OFRs.py Rosalind72.txt > Rosalind72_output.txt
+python3 translated_ORFs.py Rosalind72.txt > Rosalind72_output.txt
 
-Code:
+Python Code:
  
 ```
 #This code is the same as the last one. It just translates all the ORFs in 6 frames in such a way that there is no redundancy and there is no * to signify the stop codon
@@ -141,7 +145,7 @@ def find_orfs(sequence):
                         break
     return orfs
 
-def main():
+def translated_ORFs_FR():
 
     parser = argparse.ArgumentParser()
     parser.add_argument('file', type=str)
@@ -168,7 +172,7 @@ def main():
         print(protein)
 
 if __name__ == "__main__":
-    main()
+    translated_ORFs_FR()
 
 ```
 
@@ -203,20 +207,59 @@ MRPRGRGSSRP
 MSLEMQG 
 
 ## 4. Running ORFs Forward and Reverse for all 14 Genomes 
-Command:
+
+Commands:
  
-```
 nano forloop_ORFs_FR.sh
 chmod +x forloop_ORFs_FR.sh (Activating for execution)
 ./forloop_ORFs_FR.sh
-```
 
-For loop Code:
+For loop Code Bash Script:
 
 ```
 base_dir="/home/masom0b/ncbi_dataset/week_4/ncbi_dataset/data"
 
 output_dir="/home/masom0b/ncbi_dataset/week_4/14_Genomes_ORF_FR_output"
+
+mkdir -p "$output_dir"  
+
+for dir in "$base_dir"/*/; do 
+
+    fna_file=$(find "$dir" -name "*GCF*.fna")
+
+    if [[ -f "$fna_file" ]]; then
+
+        base_name=$(basename "$fna_file" .fna) #
+
+        output_file="$output_dir/${base_name}_all_ORFs_FR.txt"
+
+        python3 /home/masom0b/ncbi_dataset/week_4/ORFs_FR.py "$fna_file" > "$output_file"
+    fi
+done
+
+```
+
+Output = ORFS_FRs made in 6 frames for all the 14 Genomes having GCF strains in an output directory named 14_Genomes_ORFs_FR_output with 14 .txt files each having the same strain name that was run via the forloop embedding the python code
+
+git add forloop_ORFs_FR_.sh
+git add README.md
+git add 14_Genomes_ORF_FR_output/
+git commit -m "Task 4"
+git push 
+ 
+## 5. Only Lengthy ORFs
+
+
+Command: nano name
+chmod +x long_ORFs.py
+./forloop_longORFs.sh
+
+For Loop Code Bash Script: 
+
+```
+base_dir="/home/masom0b/ncbi_dataset/week_4/ncbi_dataset/data"
+
+output_dir="/home/masom0b/ncbi_dataset/week_4/14_Genomes_LongORFs_output"
 
 mkdir -p "$output_dir"
 
@@ -228,39 +271,79 @@ for dir in "$base_dir"/*/; do
 
         base_name=$(basename "$fna_file" .fna)
 
-        output_file="$output_dir/${base_name}_all_ORFs_FR.txt"
+        output_file="$output_dir/${base_name}_all_long_ORFs.txt"
 
-        python3 /home/masom0b/ncbi_dataset/week_4/ORFs_FR.py "$fna_file" > "$output_file"
+        python3 /home/masom0b/ncbi_dataset/week_4/long_ORFs.py "$fna_file" > "$output_file"
     fi
 done
-
-``` 
-
-Output = ORFS_FRs made in 6 frames for all the 14 Genomes having GCF strains in an output directory named 14_Genomes_ORFs_FR_output with 14 .txt files each having the same strain name that was run via the forloop embedding the python code
- 
-## 5. Only Lengthy ORFs
-
-Command:
-
-For Loop Code:
-
-
 ```
 
-
-```
 
 Python Code:
 
+```
+# 
+import argparse
+from Bio import SeqIO
+from Bio.Seq import Seq
 
-Output= 
+def find_orfs(sequence, min_codon_length):
+    stop_codons = ['TAA', 'TAG', 'TGA']
+    orfs = []
+    min_length = min_codon_length * 3  # Minimum nucleotide length for the ORF (codons * 3)
+
+    for frame in range(3):
+        for i in range(frame, len(sequence), 3):
+            codon = sequence[i:i+3]
+            if codon == 'ATG':  # Start codon
+                for j in range(i + 3, len(sequence), 3):
+                    stop_codon = sequence[j:j+3]
+                    if stop_codon in stop_codons:
+                        orf = sequence[i:j+3]
+                        if len(orf) >= min_length:  # Only include ORFs that meet the length requirement
+                            orfs.append(orf)
+                        break
+    return orfs
+
+def long_ORFs():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('file', type=str)
+    parser.add_argument('--min_length', type=int, default=100)
+    args = parser.parse_args()
+
+    for record in SeqIO.parse(args.file, "fasta"):
+        genome_sequence = str(record.seq)
+
+        forward_orfs = find_orfs(genome_sequence, args.min_length)
+        reverse_comp_seq = str(Seq(genome_sequence).reverse_complement())
+        reverse_orfs = find_orfs(reverse_comp_seq, args.min_length)
+
+        all_orfs = forward_orfs + reverse_orfs
+
+        for orf in all_orfs:
+            print(orf)
+
+if __name__ == "__main__":
+    long_ORFs()
+```
 
 ## 6. Lengthy ORFs with a RBS 
-Command: 
+
+Command:
+
+Code Bash Script: 
 
 ```
 
 ```
-Code: 
 
-Output= 
+Python Code: 
+
+```
+
+```
+
+Output=
+
+
+Adding to github
