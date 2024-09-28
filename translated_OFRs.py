@@ -1,4 +1,4 @@
-#This code is the same as the last one. It just translates all the ORFs in 6 frames in such a way that there is no redundancy and there is no * to signify the stop codon
+elp="The path to the input FASTA file"#This code is the same as the last one. It just translates all the ORFs in 6 frames in such a way that there is no redundancy and there is no * to signify the stop codon
 
 import argparse
 from Bio import SeqIO
@@ -19,7 +19,7 @@ def find_orfs(sequence):
                         break
     return orfs
 
-def main():
+def translated_ORFs_FR():
 
     parser = argparse.ArgumentParser()
     parser.add_argument('file', type=str)
@@ -46,5 +46,5 @@ def main():
         print(protein)
 
 if __name__ == "__main__":
-    main()
+    translated_ORFs_FR()
 
