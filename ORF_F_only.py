@@ -3,9 +3,6 @@
 import argparse #ChatGPT3.5 was used to ask which module is used in Bio-Python to search for a fasta file type as an input to be read by the code itself
 from Bio import SeqIO
 
-import argparse
-from Bio import SeqIO
-
 def find_orfs(sequence):
     stop_codons = ['TAA', 'TAG', 'TGA']
     orfs = []
