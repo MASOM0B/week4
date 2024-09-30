@@ -56,7 +56,8 @@ if __name__ == "__main__":
 
 ```
 
-Commit = git add 
+Commit = 
+git add 
 git commit -m
 git push 
  
@@ -67,8 +68,11 @@ This output was pushed along with 2 other outputs as the 8th commit
 
 ## 2. ORFs Forward and Reverse Both
 
-Command: python3 ORFs_FR.py /home/masom0b/ncbi_dataset/week_4/ncbi_dataset/data/GCF_000006745.1/GCF_000006745.1_ASM674v1_genomic.fna > ORFs_FR_output.txt
+Command: 
 
+```
+python3 ORFs_FR.py /home/masom0b/ncbi_dataset/week_4/ncbi_dataset/data/GCF_000006745.1/GCF_000006745.1_ASM674v1_genomic.fna > ORFs_FR_output.txt
+```
 Python Code:
 
 ```
@@ -120,8 +124,10 @@ Output= ORF_FR_output.txt
 ## 3. Rosalind Problem 72
 
 Commands:  
+```
 nano Rosalind72.txt
 python3 translated_ORFs.py Rosalind72.txt > Rosalind72_output.txt
+```
 
 Python Code:
  
@@ -211,10 +217,12 @@ MSLEMQG
 ## 4. Running ORFs Forward and Reverse for all 14 Genomes 
 
 Commands:
- 
+
+``` 
 nano forloop_ORFs_FR.sh
 chmod +x forloop_ORFs_FR.sh (Activating for execution)
 ./forloop_ORFs_FR.sh
+```
 
 For loop Code Bash Script:
 
@@ -243,12 +251,14 @@ done
 
 Output = ORFS_FRs made in 6 frames for all the 14 Genomes having GCF strains in an output directory named 14_Genomes_ORFs_FR_output with 14 .txt files each having the same strain name that was run via the forloop embedding the python code
 
+```
 git add forloop_ORFs_FR_.sh
 git add README.md
 git add 14_Genomes_ORF_FR_output/
 git commit -m "Task 4"
 git push 
- 
+```
+
 ## 5. Only Lengthy ORFs
 
 
@@ -433,6 +443,8 @@ git push -u origin main
 ```
 
 ## Pushing 
+```
 git remote add origin https://github.com/MASOM0B/week4.git
 git branch -M main
 git push -u origin main
+```
