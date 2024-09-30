@@ -184,7 +184,9 @@ if __name__ == "__main__":
 
 ```
 
-Output = A file Rosalind72_output.txt containing the following translations of FR_ORFs
+Output = 
+```
+A file Rosalind72_output.txt containing the following translations of FR_ORFs
 MGWAVSPCTKLNAPNLAVGAVWCFG
 MVARNTIFQEYGLRMRFLLRLYAVSFGHVQAYRCKLVSFRYS
 MISLRSQTNDSTTKNRLY
@@ -213,7 +215,7 @@ MGSRLIYLANGRYTPGE
 MPPRRVHPRICAMGSRLIYLANGRYTPGE
 MRPRGRGSSRP
 MSLEMQG 
-
+```
 ## 4. Running ORFs Forward and Reverse for all 14 Genomes 
 
 Commands:
@@ -341,6 +343,7 @@ def long_ORFs():
 if __name__ == "__main__":
     long_ORFs()
 ```
+Output = 14_Genomes_LongORFs_output
 
 ## 6. Lengthy ORFs with a RBS 
 
