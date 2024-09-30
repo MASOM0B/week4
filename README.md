@@ -10,7 +10,9 @@ Creation of git files, git repo and pushing the how I generally pushed the files
 ### git add ORFs_F_only.py README.md
 ### git commit -m "ORFs_F_only.py"
 ### Username and Password (Instead of Password, had to create a token following by going into my profile, settings, Developer Settings, Personal Access Tokens, Fine-grained tokens, create token after adding a description)
-
+git remote add origin https://github.com/MASOM0B/week4.git
+git branch -M main
+git push -u origin main
 ## 1. ORFs Forward only
 
 Command: python3 ORFs_F_only.py /home/masom0b/ncbi_dataset/week_4/ncbi_dataset/data/GCF_000006745.1/GCF_000006745.1_ASM674v1_genomic.fna > ORFs_F_only_output.txt 
