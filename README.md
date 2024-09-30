@@ -250,9 +250,12 @@ git push
 ## 5. Only Lengthy ORFs
 
 
-Command: nano name
+Command: 
+```
+nano long_ORFs.py
 chmod +x long_ORFs.py
 ./forloop_longORFs.sh
+```
 
 For Loop Code Bash Script: 
 
@@ -329,21 +332,105 @@ if __name__ == "__main__":
 
 ## 6. Lengthy ORFs with a RBS 
 
-Command:
+Commands:
+
+```
+cd /home/masom0b/ncbi_dataset/week_4
+nano forloop_genes.sh
+chmod +x forloop_genes.sh
+./forloop_genes.sh
+
+```
 
 Code Bash Script: 
 
 ```
+base_dir="/home/masom0b/ncbi_dataset/week_4/ncbi_dataset/data"
+
+output_dir="/home/masom0b/ncbi_dataset/week_4/14_Genomes_genes_output"
+
+mkdir -p "$output_dir"
+
+for dir in "$base_dir"/*/; do
+
+    fna_file=$(find "$dir" -name "*GCF*.fna")
+
+    if [[ -f "$fna_file" ]]; then
+
+        base_name=$(basename "$fna_file" .fna)
+
+        output_file="$output_dir/${base_name}_all_genes.txt"
+
+        python3 /home/masom0b/ncbi_dataset/week_4/genes.py "$fna_file" > "$output_file"
+    fi
+done
+
 
 ```
 
 Python Code: 
 
 ```
+import argparse
+from Bio import SeqIO
+from Bio.Seq import Seq
+
+def find_orfs(sequence, min_codon_length, upstream_range, rbs_sequence):
+    stop_codons = ['TAA', 'TAG', 'TGA']
+    orfs = []
+    min_length = min_codon_length * 3
+
+    for frame in range(3):
+        for i in range(frame, len(sequence), 3):
+            codon = sequence[i:i+3]
+            if codon == 'ATG':
+                upstream_region = sequence[max(0, i - upstream_range):i]
+                if rbs_sequence in upstream_region:
+                    for j in range(i + 3, len(sequence), 3):
+                        stop_codon = sequence[j:j+3]
+                        if stop_codon in stop_codons:
+                            orf = sequence[i:j+3]
+                            if len(orf) >= min_length:
+                                orfs.append(orf)
+                            break
+    return orfs
+
+def genes():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('file', type=str)
+    parser.add_argument('--min_length', type=int, default=100)
+    parser.add_argument('--upstream_range', type=int, default=20)
+    parser.add_argument('--rbs_sequence', type=str, default='AGGAGG')
+    args = parser.parse_args()
+
+    for record in SeqIO.parse(args.file, "fasta"):
+        genome_sequence = str(record.seq)
+
+        forward_orfs = find_orfs(genome_sequence, args.min_length, args.upstream_range, args.rbs_sequence)
+        reverse_orfs = find_orfs(str(Seq(genome_sequence).reverse_complement()), args.min_length, args.upstream_range, args.rbs_sequence)
+
+        all_orfs = forward_orfs + reverse_orfs
+
+        for orf in all_orfs:
+            print(orf)
+if __name__ == "__main__":
+    genes()
 
 ```
 
-Output=
+Output = 14_Genomes_genes_output dir
 
+Adding to github:
 
-Adding to github
+Commands:
+
+```
+git remote add origin https://github.com/MASOM0B/week4.git
+git branch -M main
+git push -u origin main
+```
+
+## Pushing 
+git remote add origin https://github.com/MASOM0B/week4.git
+git branch -M main
+git push -u origin main
