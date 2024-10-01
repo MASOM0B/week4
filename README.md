@@ -304,7 +304,7 @@ for dir in "$base_dir"/*/; do
 
         output_file="$output_dir/${base_name}_all_long_ORFs.txt"
 
-        python3 /home/masom0b/ncbi_dataset/week_4/long_ORFs.py "$fna_file" > "$output_file"
+        python3 /home/masom0b/ncbi_dataset/week_4/long_ORFs.py "$fna_file" 100 > "$output_file"
     fi
 done
 ```
