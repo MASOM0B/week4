@@ -1,7 +1,17 @@
 # Week 4: Workflow to create a genefinder tool
 
-Creation of git files, git repo and pushing the how I generally pushed the files
+This tool finds Open Reading Frames (ORFs) in FASTA files.
 
+## Requirements
+- Python 3.6+
+- BioPython
+
+## Installation
+1. Clone this repository
+2. Install dependencies: `pip install biopython`
+
+Creation of git files, git repo and pushing the how I generally pushed the files
+```
 ### mkdir week_4
 ### cd week_4
 ### git init
@@ -13,9 +23,13 @@ Creation of git files, git repo and pushing the how I generally pushed the files
 git remote add origin https://github.com/MASOM0B/week4.git
 git branch -M main
 git push -u origin main
+```
+
 ## 1. ORFs Forward only
 
+```
 Command: python3 ORFs_F_only.py /home/masom0b/ncbi_dataset/week_4/ncbi_dataset/data/GCF_000006745.1/GCF_000006745.1_ASM674v1_genomic.fna > ORFs_F_only_output.txt 
+```
 
 Python Code: 
 
@@ -55,12 +69,11 @@ if __name__ == "__main__":
     ORFs_F_only()
 
 ```
-
-Commit = 
-git add 
-git commit -m
+```
+git add ORFs_F_only.py 
+Commit -m ORFs_F_only.py 
 git push 
- 
+``` 
 
 Output = ORFs_F_only_output.txt
 
@@ -73,6 +86,7 @@ Command:
 ```
 python3 ORFs_FR.py /home/masom0b/ncbi_dataset/week_4/ncbi_dataset/data/GCF_000006745.1/GCF_000006745.1_ASM674v1_genomic.fna > ORFs_FR_output.txt
 ```
+
 Python Code:
 
 ```
