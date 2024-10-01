@@ -326,7 +326,7 @@ def find_orfs(sequence, min_codon_length):
     for frame in range(3):
         for i in range(frame, len(sequence), 3):
             codon = sequence[i:i+3]
-            if codon == 'ATG':  # Start codon
+            if codon == 'ATG':
                 for j in range(i + 3, len(sequence), 3):
                     stop_codon = sequence[j:j+3]
                     if stop_codon in stop_codons:
