@@ -140,7 +140,7 @@ Output= ORF_FR_output.txt
 Commands:  
 ```
 nano Rosalind72.txt
-python3 translated_ORFs.py Rosalind72.txt > Rosalind72_output.txt
+python3 translated_ORFs.py Rosalind72.txt 100 20 > Rosalind72_output.txt
 ```
 
 Python Code:
@@ -259,7 +259,7 @@ for dir in "$base_dir"/*/; do
 
         output_file="$output_dir/${base_name}_all_ORFs_FR.txt"
 
-        python3 /home/masom0b/ncbi_dataset/week_4/ORFs_FR.py "$fna_file" 100 > "$output_file"
+        python3 /home/masom0b/ncbi_dataset/week_4/ORFs_FR.py "$fna_file" > "$output_file"
     fi
 done
 
